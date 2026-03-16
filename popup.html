@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Save Image as Type</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="28" height="28" rx="6" fill="url(#grad)"/>
+        <path d="M9 18.5L13.5 11L17 16L19.5 13L23 18.5H9Z" fill="white" opacity="0.95"/>
+        <circle cx="10.5" cy="10.5" r="2" fill="white" opacity="0.8"/>
+        <defs>
+          <linearGradient id="grad" x1="0" y1="0" x2="28" y2="28">
+            <stop offset="0%" stop-color="#1a1a2e"/>
+            <stop offset="100%" stop-color="#16213e"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div>
+        <div class="logo-title">Save Image as Type</div>
+        <div class="logo-sub">v1.1.0 · 9 formats</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Default Format -->
+  <section class="section">
+    <div class="section-label">DEFAULT FORMAT</div>
+    <div class="format-grid" id="format-grid">
+
+      <!-- Row 1: Web lossless / lossy / modern -->
+      <button class="format-btn" data-format="png">
+        <span class="format-ext">PNG</span>
+        <span class="format-desc">Lossless · Transparent</span>
+      </button>
+      <button class="format-btn" data-format="jpg">
+        <span class="format-ext">JPG</span>
+        <span class="format-desc">Lossy · Small files</span>
+      </button>
+      <button class="format-btn" data-format="webp">
+        <span class="format-ext">WebP</span>
+        <span class="format-desc">Modern · Best ratio</span>
+      </button>
+
+      <!-- Row 2: Newest / vector / animated -->
+      <button class="format-btn" data-format="avif">
+        <span class="format-ext">AVIF</span>
+        <span class="format-desc">Newest · Ultra compact</span>
+      </button>
+      <button class="format-btn" data-format="svg">
+        <span class="format-ext">SVG</span>
+        <span class="format-desc">Vector · Any scale</span>
+      </button>
+      <button class="format-btn" data-format="gif">
+        <span class="format-ext">GIF</span>
+        <span class="format-desc">Classic · 256 colors</span>
+      </button>
+
+      <!-- Row 3: Document / archival -->
+      <button class="format-btn" data-format="pdf">
+        <span class="format-ext">PDF</span>
+        <span class="format-desc">Document · Print ready</span>
+      </button>
+      <button class="format-btn" data-format="tiff">
+        <span class="format-ext">TIFF</span>
+        <span class="format-desc">Archival · Uncompressed</span>
+      </button>
+      <button class="format-btn" data-format="bmp">
+        <span class="format-ext">BMP</span>
+        <span class="format-desc">Raw · No encoding</span>
+      </button>
+
+    </div>
+
+    <!-- Format description panel -->
+    <div class="format-info" id="format-info">
+      <span class="fi-text" id="fi-text"></span>
+    </div>
+  </section>
+
+  <!-- Context Menu Toggle -->
+  <section class="section">
+    <div class="section-label">CONTEXT MENU</div>
+    <label class="toggle-row">
+      <div class="toggle-info">
+        <span class="toggle-title">Show all formats</span>
+        <span class="toggle-desc">All 9 formats listed in submenu</span>
+      </div>
+      <div class="toggle-wrap">
+        <input type="checkbox" id="show-all-formats" class="toggle-input" />
+        <div class="toggle-track"><div class="toggle-thumb"></div></div>
+      </div>
+    </label>
+  </section>
+
+  <!-- Quality Sliders -->
+  <section class="section">
+    <div class="section-label">QUALITY — LOSSY FORMATS</div>
+
+    <div class="quality-row">
+      <div class="quality-label">
+        <span class="quality-name">JPG</span>
+        <span class="quality-val" id="jpg-val">92%</span>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" id="jpg-quality" class="slider" min="10" max="100" step="1" value="92" />
+        <div class="slider-fill" id="jpg-fill"></div>
+      </div>
+    </div>
+
+    <div class="quality-row">
+      <div class="quality-label">
+        <span class="quality-name">WebP</span>
+        <span class="quality-val" id="webp-val">90%</span>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" id="webp-quality" class="slider" min="10" max="100" step="1" value="90" />
+        <div class="slider-fill" id="webp-fill"></div>
+      </div>
+    </div>
+
+    <div class="quality-row">
+      <div class="quality-label">
+        <span class="quality-name">AVIF</span>
+        <span class="quality-val" id="avif-val">80%</span>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" id="avif-quality" class="slider" min="10" max="100" step="1" value="80" />
+        <div class="slider-fill" id="avif-fill"></div>
+      </div>
+    </div>
+
+    <div class="quality-hint-row">
+      <span>Lower quality → smaller file</span>
+      <span>Higher → better fidelity</span>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="section stats-section">
+    <div class="section-label">CONVERSION STATS</div>
+    <div class="stats-grid">
+      <div class="stat-chip total-chip" id="stat-total">
+        <span class="stat-num">0</span>
+        <span class="stat-lbl">total</span>
+      </div>
+      <div class="stat-chip" id="stat-png"><span class="stat-num">0</span><span class="stat-lbl">PNG</span></div>
+      <div class="stat-chip" id="stat-jpg"><span class="stat-num">0</span><span class="stat-lbl">JPG</span></div>
+      <div class="stat-chip" id="stat-webp"><span class="stat-num">0</span><span class="stat-lbl">WebP</span></div>
+      <div class="stat-chip" id="stat-avif"><span class="stat-num">0</span><span class="stat-lbl">AVIF</span></div>
+      <div class="stat-chip" id="stat-svg"><span class="stat-num">0</span><span class="stat-lbl">SVG</span></div>
+      <div class="stat-chip" id="stat-gif"><span class="stat-num">0</span><span class="stat-lbl">GIF</span></div>
+      <div class="stat-chip" id="stat-pdf"><span class="stat-num">0</span><span class="stat-lbl">PDF</span></div>
+      <div class="stat-chip" id="stat-tiff"><span class="stat-num">0</span><span class="stat-lbl">TIFF</span></div>
+      <div class="stat-chip" id="stat-bmp"><span class="stat-num">0</span><span class="stat-lbl">BMP</span></div>
+    </div>
+  </section>
+
+  <div class="footer-hint">
+    Right-click any image → <strong>Save Image as Type</strong>
+  </div>
+
+</div>
+<script src="popup.js"></script>
+</body>
+</html>
